@@ -2,17 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../model/product';
 import { CatalogComponent } from '../catalog/catalog.component';
+import { CartComponent } from '../cart/cart.component';
+import { CartItem } from '../../model/cartItem';
 
 @Component({
   selector: 'app-cart-app',
   standalone: true,
-  imports: [CatalogComponent],
+  imports: [CatalogComponent, CartComponent],
   templateUrl: './cart-app.component.html',
   styleUrl: './cart-app.component.css'
 })
 export class CartAppComponent implements OnInit{
 
+  // Productos que muestra el catálogo.
   products: Product[] = [];
+
+  // Los productos que hemos añadido al carrito.
+  items: CartItem[] = [];
 
   constructor(private service: ProductService) {
 
