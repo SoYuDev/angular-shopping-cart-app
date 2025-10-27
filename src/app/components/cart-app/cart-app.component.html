@@ -1,1 +1,11 @@
-<h2>Wow, a shopping cart!</h2>
+<h2>Angular shopping cart</h2>
+<div>
+  @for (product of products; track $index) {
+  <div>
+    <h5>{{ product.name }}</h5>
+    <p>{{ product.description }}</p>
+    <p>{{ product.price }}</p>
+    <button>Add to cart</button>
+  </div>
+  }
+</div>
