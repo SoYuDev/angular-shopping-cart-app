@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../model/product';
+import { CatalogComponent } from '../catalog/catalog.component';
 
 @Component({
   selector: 'app-cart-app',
   standalone: true,
-  imports: [],
+  imports: [CatalogComponent],
   templateUrl: './cart-app.component.html',
   styleUrl: './cart-app.component.css'
 })
