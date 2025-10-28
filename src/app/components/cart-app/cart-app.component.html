@@ -1,8 +1,9 @@
 <h2>Product's Catalog!</h2>
 <!-- Estamos pasando en el atributo products del hijo (app-catalog) el atributo del padre (app-cart-app). Además estamos emitiendo el producto que hemos añadido al carrito haciendo click. -->
 <app-catalog [products]="products" (productEventEmitter)="onAddCart($event)"></app-catalog>
+
 @if(items.length > 0) {
-    <app-cart [items]="items"></app-cart>
+    <app-cart [items]="items" (idProductEventEmitter)="onDeleteCart($event)"></app-cart>
 } @else {
     <div class="alert alert-warning">There are no items in the cart!</div>
 }
