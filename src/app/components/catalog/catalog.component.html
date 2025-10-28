@@ -2,7 +2,7 @@
   @for (product of products; track $index) {
   <!-- Pasamos el producto evaluado al componente hijo (product-card) -->
   <div class="col-4 my-2">
-    <app-product-card [product]="product"></app-product-card>
+    <app-product-card [product]="product" (productEventEmitter)="onAddCart($event)"></app-product-card>
   </div>
 
   }
