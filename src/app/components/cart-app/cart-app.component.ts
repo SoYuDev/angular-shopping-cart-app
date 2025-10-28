@@ -19,10 +19,13 @@ export class CartAppComponent implements OnInit {
   // Los productos que hemos añadido al carrito.
   items: CartItem[] = [];
 
+  total: number = 0;
+
   constructor(private service: ProductService) {}
   // Cuando se inicializa la app rellenamos los datos que hay contenidos en data.ts en la variable products.
   ngOnInit(): void {
     this.products = this.service.findAll();
+    this.calculateTotal();
   }
 
   // Añadimos el producto a partir de los eventos de los componentes hijos product-card -> catalog -> cart-app
@@ -53,12 +56,19 @@ export class CartAppComponent implements OnInit {
     } else {
       this.items = [...this.items, { product: { ...product }, quantity: 1 }];
     }
+    this.calculateTotal();
   }
 
   onDeleteCart(id: number): void {
     //Filtra todo aquello que cumpla la condición.
-    this.items = this.items.filter( item => {
-      item.product.id !== id;
-    })
+    this.items = this.items.filter((item) => item.product.id !== id);
+    this.calculateTotal();
+  }
+
+  calculateTotal(): void {
+    this.total = this.items.reduce(
+      (accumulator, item) => accumulator + item.quantity * item.product.price,
+      0
+    );
   }
 }
