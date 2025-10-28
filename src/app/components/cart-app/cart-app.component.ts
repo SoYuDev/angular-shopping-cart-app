@@ -25,6 +25,11 @@ export class CartAppComponent implements OnInit {
   // Cuando se inicializa la app rellenamos los datos que hay contenidos en data.ts en la variable products.
   ngOnInit(): void {
     this.products = this.service.findAll();
+    // Pasamos el JSON del session storage a el atributo items.
+    // Si la session de nombre 'cart' existe lo pasamos a nuestro Array Items, si no los items serán un Array vacío
+    this.items = JSON.parse(sessionStorage.getItem('cart')!) || [];
+
+    // Es importante poner aquí el calculateTotal porque si lo ponemos antes de recupear el JSON y pasarlo a un objeto de TS el calculo dará 0.
     this.calculateTotal();
   }
 
@@ -57,12 +62,14 @@ export class CartAppComponent implements OnInit {
       this.items = [...this.items, { product: { ...product }, quantity: 1 }];
     }
     this.calculateTotal();
+    this.saveSession();
   }
 
   onDeleteCart(id: number): void {
     //Filtra todo aquello que cumpla la condición.
     this.items = this.items.filter((item) => item.product.id !== id);
     this.calculateTotal();
+    this.saveSession();
   }
 
   calculateTotal(): void {
@@ -70,5 +77,10 @@ export class CartAppComponent implements OnInit {
       (accumulator, item) => accumulator + item.quantity * item.product.price,
       0
     );
+  }
+
+  // Función para guardar la información en la sesión HTTP. (No perder el carrito cuando refresquemos la página)
+  saveSession(): void {
+    sessionStorage.setItem('cart', JSON.stringify(this.items));
   }
 }
