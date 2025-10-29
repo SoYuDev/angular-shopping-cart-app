@@ -1,31 +1,32 @@
-<h2>Product's Catalog!</h2>
-<button class="btn btn-info btn-sm" (click)="openCart()">
-  Show Cart ({{ items.length }})
-</button>
-<div class="row">
-  <div [className]="showCart ? 'col-9' : 'col'">
-    <!-- Estamos pasando en el atributo products del hijo (app-catalog) el atributo del padre (app-cart-app). Además estamos emitiendo el producto que hemos añadido al carrito haciendo click. -->
-    <app-catalog
-      [products]="products"
-      (productEventEmitter)="onAddCart($event)"
-    ></app-catalog>
-  </div>
-  @if(showCart) {
-  <div class="col-3">
-    @if(items.length > 0) {
+<app-navbar [items]="items" (openEventEmitter)="openCart()"></app-navbar>
 
-    <app-cart
-      [items]="items"
-      [total]="total"
-      (idProductEventEmitter)="onDeleteCart($event)"
-    ></app-cart>
+<div class="container">
+  <h2 class="my-2">Product's Catalog!</h2>
+  <div class="row">
+    <div [className]="showCart ? 'col-9' : 'col'">
+      <!-- Estamos pasando en el atributo products del hijo (app-catalog) el atributo del padre (app-cart-app). Además estamos emitiendo el producto que hemos añadido al carrito haciendo click. -->
+      <app-catalog
+        [products]="products"
+        (productEventEmitter)="onAddCart($event)"
+      ></app-catalog>
+    </div>
+    @if(showCart) {
+    <div class="col-3">
+      @if(items.length > 0) {
 
-    } @else {
-    <div class="alert alert-warning">There are no items in the cart!</div>
+      <app-cart
+        [items]="items"
+        [total]="total"
+        (idProductEventEmitter)="onDeleteCart($event)"
+      ></app-cart>
+
+      } @else {
+      <div class="alert alert-warning">There are no items in the cart!</div>
+      }
+      <button class="btn btn-secondary btn-sm float-end" (click)="openCart()">
+        Close cart
+      </button>
+    </div>
     }
-    <button class="btn btn-secondary btn-sm float-end" (click)="openCart()">
-      Close cart
-    </button>
   </div>
-  }
 </div>
