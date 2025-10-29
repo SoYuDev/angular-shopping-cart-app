@@ -19,9 +19,15 @@ export class CartAppComponent implements OnInit {
   // Los productos que hemos añadido al carrito.
   items: CartItem[] = [];
 
+  // Precio total de los productos seleccionados
   total: number = 0;
 
+  // Booleana para mostrar el Shopping Cart
+  showCart: boolean = false;
+
   constructor(private service: ProductService) {}
+
+
   // Cuando se inicializa la app rellenamos los datos que hay contenidos en data.ts en la variable products.
   ngOnInit(): void {
     this.products = this.service.findAll();
@@ -82,5 +88,9 @@ export class CartAppComponent implements OnInit {
   // Función para guardar la información en la sesión HTTP. (No perder el carrito cuando refresquemos la página)
   saveSession(): void {
     sessionStorage.setItem('cart', JSON.stringify(this.items));
+  }
+
+  openCart(): void {
+    this.showCart = !this.showCart;
   }
 }
