@@ -2,31 +2,42 @@
 
 <div class="container">
   <h2 class="my-2">Product's Catalog!</h2>
-  <div class="row">
-    <div [className]="showCart ? 'col-9' : 'col'">
-      <!-- Estamos pasando en el atributo products del hijo (app-catalog) el atributo del padre (app-cart-app). Además estamos emitiendo el producto que hemos añadido al carrito haciendo click. -->
-      <app-catalog
-        [products]="products"
-        (productEventEmitter)="onAddCart($event)"
-      ></app-catalog>
-    </div>
-    @if(showCart) {
-    <div class="col-3">
-      @if(items.length > 0) {
 
-      <app-cart
-        [items]="items"
-        [total]="total"
-        (idProductEventEmitter)="onDeleteCart($event)"
-      ></app-cart>
+  <!-- Estamos pasando en el atributo products del hijo (app-catalog) el atributo del padre (app-cart-app). Además estamos emitiendo el producto que hemos añadido al carrito haciendo click. -->
+  <app-catalog
+    [products]="products"
+    (productEventEmitter)="onAddCart($event)"
+  ></app-catalog>
 
-      } @else {
-      <div class="alert alert-warning">There are no items in the cart!</div>
-      }
-      <button class="btn btn-secondary btn-sm float-end" (click)="openCart()">
-        Close cart
-      </button>
+  @if(showCart) {
+
+  <div class="abrir-modal animacion fadeIn">
+    <div class="modal" style="display: block" tabindex="-1">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Shopping cart!</h5>
+          </div>
+          <div class="modal-body">
+            <button
+              class="btn btn-secondary float-end"
+              (click)="openCart()"
+            >X</button>
+            @if (items.length > 0) {
+            <app-cart
+              [items]="items"
+              [total]="total"
+              (idProductEventEmitter)="onDeleteCart($event)"
+            ></app-cart>
+            } @else {
+            <div class="alert alert-warning">
+              There are no items in the cart!
+            </div>
+            }
+          </div>
+        </div>
+      </div>
     </div>
-    }
   </div>
+  }
 </div>
