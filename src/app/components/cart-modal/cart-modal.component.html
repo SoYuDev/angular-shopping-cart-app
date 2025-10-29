@@ -1,0 +1,39 @@
+<div class="abrir-modal animacion fadeIn">
+  <div class="modal" style="display: block" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Shopping cart!</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="openCloseCart()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          @if (items.length > 0) {
+          <app-cart
+            [items]="items"
+            [total]="total"
+            (idProductEventEmitter)="onDeleteCart($event)"
+          ></app-cart>
+          } @else {
+          <div class="alert alert-warning">There are no items in the cart!</div>    
+          }
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="openCloseCart()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
