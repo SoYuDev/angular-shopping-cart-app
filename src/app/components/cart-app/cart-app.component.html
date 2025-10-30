@@ -12,7 +12,6 @@
   @if(showCart) {
   <app-cart-modal
     [items]="items"
-    [total]="total"
     (idProductEventEmitter)="onDeleteCart($event)"
     (openEventEmitter)="openCloseCart()"
   ></app-cart-modal>

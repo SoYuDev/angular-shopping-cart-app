@@ -20,9 +20,6 @@ export class CartAppComponent implements OnInit {
   // Los productos que hemos añadido al carrito.
   items: CartItem[] = [];
 
-  // Precio total de los productos seleccionados
-  total: number = 0;
-
   // Booleana para mostrar el Shopping Cart
   showCart: boolean = false;
 
@@ -37,7 +34,7 @@ export class CartAppComponent implements OnInit {
     this.items = JSON.parse(sessionStorage.getItem('cart')!) || [];
 
     // Es importante poner aquí el calculateTotal porque si lo ponemos antes de recupear el JSON y pasarlo a un objeto de TS el calculo dará 0.
-    this.calculateTotal();
+    // this.calculateTotal();
   }
 
   // Añadimos el producto a partir de los eventos de los componentes hijos product-card -> catalog -> cart-app
@@ -68,28 +65,32 @@ export class CartAppComponent implements OnInit {
     } else {
       this.items = [...this.items, { product: { ...product }, quantity: 1 }];
     }
-    this.calculateTotal();
-    this.saveSession();
+    // this.calculateTotal();
+    // this.saveSession();
   }
 
   onDeleteCart(id: number): void {
     //Filtra todo aquello que cumpla la condición.
     this.items = this.items.filter((item) => item.product.id !== id);
-    this.calculateTotal();
-    this.saveSession();
+    if (this.items.length == 0) {
+      sessionStorage.removeItem('cart');
+      sessionStorage.clear();
+    }
+    // this.calculateTotal();
+    // this.saveSession();
   }
 
-  calculateTotal(): void {
-    this.total = this.items.reduce(
-      (accumulator, item) => accumulator + item.quantity * item.product.price,
-      0
-    );
-  }
+  // calculateTotal(): void {
+  //   this.total = this.items.reduce(
+  //     (accumulator, item) => accumulator + item.quantity * item.product.price,
+  //     0
+  //   );
+  // }
 
-  // Función para guardar la información en la sesión HTTP. (No perder el carrito cuando refresquemos la página)
-  saveSession(): void {
-    sessionStorage.setItem('cart', JSON.stringify(this.items));
-  }
+  // // Función para guardar la información en la sesión HTTP. (No perder el carrito cuando refresquemos la página)
+  // saveSession(): void {
+  //   sessionStorage.setItem('cart', JSON.stringify(this.items));
+  // }
 
   openCloseCart(): void {
     this.showCart = !this.showCart;
